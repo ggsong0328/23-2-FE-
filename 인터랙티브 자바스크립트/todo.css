@@ -11,7 +11,7 @@ body {
   margin: 40px;
   padding: 30px 0;
   background-color: #fcfcfc;
-  box-shadow: -5px -5px 20px #ffffff, 5px 5px 20px #babecc;
+  box-shadow: -5px -5px 20px #dfdfdf, 5px 5px 20px #babecc;
   border-radius: 8px;
   text-align: center;
 }
@@ -38,4 +38,10 @@ body {
   height: 40px;
   margin: 8px auto 15px;
   border-bottom: 1px solid #9600ff;
+  cursor: pointer;
+}
+
+.done {
+  opacity: 0.5;
+  text-decoration: line-through;
 }

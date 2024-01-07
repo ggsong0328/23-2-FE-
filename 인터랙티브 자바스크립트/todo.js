@@ -1,13 +1,23 @@
 const toDoList = document.querySelector("#to-do-list");
 
-function addNewTodo(text) {
-  // 여기에 코드를 작성하세요
-  const li = document.createElement("li");
-  li.textContent = text;
-  toDoList.append(li);
+// 1. updateToDo 함수를 완성해 주세요
+function updateToDo(event) {
+  if (event.target.classList.contains("item")) {
+    event.target.classList.toggle("done");
+  }
 }
 
+// 2. 각 li 태그가 아니라 하나의 태그에만 이벤트 핸들러를 등록해 주세요
+toDoList.addEventListener("click", updateToDo);
+
 // 테스트 코드
-addNewTodo("자바스크립트 공부하기");
-addNewTodo("고양이 화장실 청소하기");
-addNewTodo("고양이 장난감 쇼핑하기");
+const newToDo = document.createElement("li");
+newToDo.textContent = "가계부 정리하기";
+newToDo.classList.add("item");
+toDoList.append(newToDo);
+
+/*
+toDoList.children[2].addEventListener("click", function (e) {
+  e.stopPropagation();
+});
+*/
