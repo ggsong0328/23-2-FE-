@@ -1,35 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [toDo, setToDo] = useState("");
-  const [toDos, setToDos] = useState([]);
-  const onChange = (event) => setToDo(event.target.value);
-  const onSubmit = (event) => {
-    event.preventDefault();
-    if (toDo === "") {
-      return;
-    }
-    setToDos((currentArray) => [toDo, ...currentArray]);
-    setToDo("");
-  };
+  const [loading, setLoading] = useState(true);
+  const [coins, setCoins] = useState([]);
+  const [myMoney, setMyMoney] = useState(0);
+  const [getCoin, setGetCoin] = useState(0);
+  useEffect(() => {
+    fetch("https://api.coinpaprika.com/v1/tickers")
+      .then((response) => response.json())
+      .then((json) => {
+        setCoins(json);
+        setLoading(false);
+      });
+  }, []);
+  const writeMoney = (e) => setMyMoney(e.target.value);
+  const selectCoin = (e) => setGetCoin(e.target.value);
   return (
     <div>
-      <h1>My To Dos ({toDos.length})</h1>
-      <form onSubmit={onSubmit}>
+      <h1>The Coins! {loading ? "" : `(${coins.length})`}</h1>
+      <div>
         <input
-          onChange={onChange}
-          value={toDo}
-          type="text"
-          placeholder="Write your to do..."
-        />
-        <button>Add To Do</button>
-      </form>
-      <hr />
-      <ul>
-        {toDos.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
+          type="number"
+          value={myMoney}
+          onChange={writeMoney}
+          placeholder="WRITE UR USD"
+        ></input>
+      </div>
+      {loading ? (
+        <strong>Loading...</strong>
+      ) : (
+        <select onChange={selectCoin}>
+          <option key="-1">select coin</option>
+          {coins.map((coin) => (
+            <option key={coin.id} value={coin.quotes.USD.price}>
+              {coin.name} ({coin.symbol}) : ${coin.quotes.USD.price.toFixed(2)}
+            </option>
+          ))}
+        </select>
+      )}
+      <div>
+        <h2>
+          Coins you can buy:{" "}
+          {getCoin > 0 ? (myMoney / getCoin).toFixed(2) : null}
+        </h2>
+      </div>
     </div>
   );
 }
