@@ -2,48 +2,41 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [coins, setCoins] = useState([]);
-  const [myMoney, setMyMoney] = useState(0);
-  const [getCoin, setGetCoin] = useState(0);
+  const [movies, setMovies] = useState([]);
+  const getMovies = async () => {
+    const json = await (
+      await fetch(
+        "https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year"
+      )
+    ).json();
+    setMovies(json.data.movies);
+    setLoading(false);
+  };
   useEffect(() => {
-    fetch("https://api.coinpaprika.com/v1/tickers")
-      .then((response) => response.json())
-      .then((json) => {
-        setCoins(json);
-        setLoading(false);
-      });
+    getMovies();
   }, []);
-  const writeMoney = (e) => setMyMoney(e.target.value);
-  const selectCoin = (e) => setGetCoin(e.target.value);
   return (
     <div>
-      <h1>The Coins! {loading ? "" : `(${coins.length})`}</h1>
-      <div>
-        <input
-          type="number"
-          value={myMoney}
-          onChange={writeMoney}
-          placeholder="WRITE UR USD"
-        ></input>
-      </div>
       {loading ? (
-        <strong>Loading...</strong>
+        <h1>Loading...</h1>
       ) : (
-        <select onChange={selectCoin}>
-          <option key="-1">select coin</option>
-          {coins.map((coin) => (
-            <option key={coin.id} value={coin.quotes.USD.price}>
-              {coin.name} ({coin.symbol}) : ${coin.quotes.USD.price.toFixed(2)}
-            </option>
+        <div>
+          {movies.map((movie) => (
+            <div key={movie.id}>
+              <img src={movie.medium_cover_image} />
+              <h2>{movie.title}</h2>
+              <p>{movie.summary}</p>
+              <ul>
+                <li>
+                  {movie.genres.map((g) => (
+                    <li key={g}>{g}</li>
+                  ))}
+                </li>
+              </ul>
+            </div>
           ))}
-        </select>
+        </div>
       )}
-      <div>
-        <h2>
-          Coins you can buy:{" "}
-          {getCoin > 0 ? (myMoney / getCoin).toFixed(2) : null}
-        </h2>
-      </div>
     </div>
   );
 }
