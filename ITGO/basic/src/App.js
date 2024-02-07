@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Jquery from "./Jquery";
+import SetState from "./SetState";
 import "./App.css";
 
 class App extends Component {
@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div className="container">
         <h1>React Example</h1>
-        <Jquery />
+        <SetState />
       </div>
     );
   }
