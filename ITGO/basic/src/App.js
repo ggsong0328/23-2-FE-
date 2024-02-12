@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import SetState from "./SetState";
 import "./App.css";
+import ReturnMap from "./ReturnMap";
 
 class App extends Component {
   render() {
     return (
       <div className="container">
         <h1>React Example</h1>
-        <SetState />
+        <ReturnMap />
       </div>
     );
   }
