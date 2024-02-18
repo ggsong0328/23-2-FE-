@@ -1,28 +1,35 @@
 import React, { Component } from "react";
-import Component1 from "./Component1_1";
-import Component2 from "./Component1_2";
-import Component3 from "./Component1_3";
-import "./css/basic1.css";
+import Component1 from "./Component2_1";
+import Component2 from "./Component2_2";
+import Component3 from "./Component2_3";
+// import "./css/basic1.css";
+import "./css/basic2.css";
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      title: "Contact Me",
-      description:
-        "Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer non. Adipiscing cubilia elementum integer. Integer eu ante ornare amet commetus.",
+      logo: "Responsive Example",
+      navigation: [
+        { menu: "Tutorial" },
+        { menu: "Reference" },
+        { menu: "Example" },
+      ],
+      sns: [{ icon: "facebook" }, { icon: "twitter" }, { icon: "google-plus" }],
     };
   }
   render() {
     return (
-      <div className="container">
-        <section id="contact">
-          <Component1 propsValue={this.state.title} />
-          <Component2 propsValue={this.state.description} />
-          <Component3 />
-        </section>
-      </div>
+      <section className="main">
+        <footer>
+          <div className="wrap">
+            <Component1 propsValue={this.state.logo} />
+            <Component2 propsValue={this.state.navigation} />
+            <Component3 propsValue={this.state.sns} />
+          </div>
+        </footer>
+      </section>
     );
   }
 }
