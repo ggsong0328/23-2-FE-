@@ -1,35 +1,28 @@
-import React, { Component } from "react";
-import Component1 from "./Component2_1";
-import Component2 from "./Component2_2";
-import Component3 from "./Component2_3";
-// import "./css/basic1.css";
-import "./css/basic2.css";
+import React, { Component, Fragment } from "react";
+import gsap from "gsap";
+import "./css/gsap1.css";
 
 class App extends Component {
-  constructor() {
-    super();
+  componentDidMount() {
+    let ball = document.getElementsByClassName("ball")[0];
 
-    this.state = {
-      logo: "Responsive Example",
-      navigation: [
-        { menu: "Tutorial" },
-        { menu: "Reference" },
-        { menu: "Example" },
-      ],
-      sns: [{ icon: "facebook" }, { icon: "twitter" }, { icon: "google-plus" }],
-    };
+    ball.addEventListener("click", function () {
+      gsap.fromTo(
+        ball,
+        { opacity: 0 },
+        { opacity: 1, left: 300, duration: 0.3, delay: 2 }
+      );
+    });
   }
+
   render() {
     return (
-      <section className="main">
-        <footer>
-          <div className="wrap">
-            <Component1 propsValue={this.state.logo} />
-            <Component2 propsValue={this.state.navigation} />
-            <Component3 propsValue={this.state.sns} />
-          </div>
-        </footer>
-      </section>
+      <Fragment>
+        <h1 className="title">basic :: React Example</h1>
+        <div className="container">
+          <div className="ball"></div>
+        </div>
+      </Fragment>
     );
   }
 }
